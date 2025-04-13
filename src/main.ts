@@ -1,10 +1,10 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { Component, importProvidersFrom } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule, provideRouter } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { BookListComponent } from './app/components/book-list.component';
-import { BookDetailsComponent } from './app/components/book-details.component';
+import { BooksSearchPageComponent } from './app/components/books-search-page.component';
+import { BookDetailsPageComponent } from './app/components/book-details-page.component';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +15,14 @@ import { BookDetailsComponent } from './app/components/book-details.component';
 export class App {}
 
 const routes = [
-  { path: '', component: BookListComponent },
-  { path: 'book/:id', component: BookDetailsComponent },
+  { path: '', component: BooksSearchPageComponent },
+  { path: 'book/:id', component: BookDetailsPageComponent },
   { path: '**', redirectTo: '' }
 ];
 
 bootstrapApplication(App, {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(HttpClientModule)
+    provideHttpClient(),
   ]
 }).catch(err => console.error(err));

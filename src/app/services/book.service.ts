@@ -1,40 +1,41 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-import { Book } from '../models/book';
+import { Observable, of } from 'rxjs';
+import { Book, BookDetails } from '../models/book';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  private apiUrl = 'https://www.googleapis.com/books/v1/volumes';
+  apiUrl = 'https://www.googleapis.com/books/v1/volumes';
+  httpClient = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
-
+  // GET https://www.googleapis.com/books/v1/volumes?maxResults=6&q={query}
   searchBooks(query: string): Observable<Book[]> {
-    return this.http.get<any>(`${this.apiUrl}?q=${encodeURIComponent(query)}`)
-      .pipe(
-        map(response => response.items?.map((item: any) => this.mapBookResponse(item)) || [])
-      );
+    return of([
+      {
+        id: 'xeZDDwAAQBAJ',
+        title: 'Expert Angular',
+        authors: 'Mathieu Nayrolles, Rajesh Gunasundaram, Sridhar Rao'
+      },
+      {
+        id: '-VUnCgAAQBAJ',
+        title: 'Learning React',
+        authors: '-'
+      }
+    ])
   }
 
-  getBook(id: string): Observable<Book> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
-      map(item => this.mapBookResponse(item))
-    );
-  }
-
-  private mapBookResponse(item: any): Book {
-    const volumeInfo = item.volumeInfo || {};
-    return {
-      id: item.id,
-      title: volumeInfo.title || '',
-      authors: volumeInfo.authors ? volumeInfo.authors.join(', ') : '',
-      description: volumeInfo.description,
-      publisher: volumeInfo.publisher,
-      publishedDate: volumeInfo.publishedDate,
-      pageCount: volumeInfo.pageCount,
-      imageLinks: volumeInfo.imageLinks
-    };
+  // GET https://www.googleapis.com/books/v1/volumes/{id}
+  getBook(id: string): Observable<BookDetails> {
+    return of({
+      id: 'xeZDDwAAQBAJ',
+      title: 'Expert Angular',
+      authors: 'Mathieu Nayrolles, Rajesh Gunasundaram, Sridhar Rao',
+      description: 'Learn everything you need to build highly scalable, robust web applications using Angular.',
+      publisher: 'Packt Publishing Ltd',
+      publishedDate: '2017-07-31',
+      pageCount: 454,
+    })
   }
 }

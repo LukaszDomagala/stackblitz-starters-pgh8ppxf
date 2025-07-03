@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Book } from '../models/book';
 
 export interface BooksListOptions {
-  displayAuthors?: boolean;
+  displayAuthors: boolean;
+  displayFeatured: boolean;
 }
 
 @Component({
@@ -26,7 +27,7 @@ export interface BooksListOptions {
           class="w-full h-48 object-contain mb-4"
         >
         <h3 class="text-xl font-semibold mb-3 text-gray-800">{{ book.title }}</h3>
-        <p *ngIf="options.displayAuthors" class="text-gray-600">
+        <p *ngIf="options?.displayAuthors" class="text-gray-600">
           By: {{ book.authors }}
         </p>
       </div>
@@ -43,7 +44,7 @@ export class BooksListComponent {
   router = inject(Router);
   
   books: Book[] = [];
-  options: BooksListOptions = {};
+  options?: BooksListOptions;
 
   showBookDetails(id: string) {
     this.router.navigate(['/book', id]);

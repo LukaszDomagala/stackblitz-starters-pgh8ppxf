@@ -1,14 +1,15 @@
-export interface PageDto {
-  totalItems: number;
-  items: BookDto[];
+export interface Book {
+  id: string;
+  title: string;
+  authors: string;
+  thumbnail?: string;
 }
 
-export interface BookDto {
+export interface BooksPageDto {
   // TODO
 }
 
-// GET https://www.googleapis.com/books/v1/volumes?q=Angular
-const booksPageResponse = {
+export const booksPageResponse = {
   "totalItems": 35,
   "items": [
     {
@@ -40,11 +41,21 @@ const booksPageResponse = {
   ]
 }
 
+export interface BookDetails {
+  id: string;
+  title: string;
+  authors: string;
+  thumbnail?: string;
+  description?: string;
+  publisher?: string;
+  publishedDate?: string;
+  pageCount?: number;
+}
+
 export interface BookDetailsDto {
   // TODO
 }
 
-// GET https://www.googleapis.com/books/v1/volumes/xeZDDwAAQBAJ
 const bookDetailsResponse = {
   "id": "xeZDDwAAQBAJ",
   "volumeInfo": {
@@ -62,23 +73,4 @@ const bookDetailsResponse = {
       "thumbnail": "http://books.google.com/books/publisher/content?id=xeZDDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE707FpidIXqmDG6T-qUFJuObaJDJIHo8k7CsBKTlQxGJTEvaIa1jnETw3VBB61kDqSttWG0V24RA_WF8zvrXMhYA0rUCUCMBVq9WZZhwWb6GMi8bXXNe-EiAwlRrcXRP0YfiSMet&source=gbs_api",
     },
   },
-}
-
-
-export interface Book {
-  id: string;
-  title: string;
-  authors: string;
-  thumbnail?: string;
-}
-
-export interface BookDetails {
-  id: string;
-  title: string;
-  authors: string;
-  thumbnail?: string;
-  description?: string;
-  publisher?: string;
-  publishedDate?: string;
-  pageCount?: number;
 }

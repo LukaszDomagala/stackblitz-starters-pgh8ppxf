@@ -23,7 +23,7 @@ import { BooksListComponent, BooksListOptions } from "./books-list.component";
             >
             <button 
                 (click)="searchBooks()"
-                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-500"
             >
                 Search
             </button>
@@ -49,7 +49,10 @@ export class BooksSearchPageComponent {
     
     queryControl = new FormControl('');
     books = this.bookService.searchBooks('test');
-    options: BooksListOptions = { displayAuthors: true };
+    options: BooksListOptions = {
+        displayAuthors: true,
+        displayFeatured: false,
+    };
 
     searchBooks() {
         // TODO
